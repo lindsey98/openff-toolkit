@@ -174,13 +174,13 @@ class Particle(Serializable):
         """
         self._name = name
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict:
         """Convert to dictionary representation."""
         # Implement abstract method Serializable.to_dict()
         raise NotImplementedError()  # TODO
 
     @classmethod
-    def from_dict(cls: type[P], d: dict) -> P:
+    def from_dict(cls: type[P], d: Dict) -> P:
         """Static constructor from dictionary representation."""
         # Implement abstract method Serializable.to_dict()
         raise NotImplementedError()  # TODO
@@ -226,7 +226,7 @@ class Atom(Particle):
         name: Optional[str] = None,
         molecule=None,
         stereochemistry: Optional[str] = None,
-        metadata: Optional[dict[str, Union[int, str]]] = None,
+        metadata: Optional[Dict[str, Union[int, str]]] = None,
     ):
         """
         Create an immutable Atom object.
@@ -303,7 +303,7 @@ class Atom(Particle):
 
         self._bonds.append(bond)
 
-    def to_dict(self) -> dict[str, Union[None, str, int, bool, dict[Any, Any]]]:
+    def to_dict(self) -> Dict[str, Union[None, str, int, bool, Dict[Any, Any]]]:
         """Return a dict representation of the atom."""
         # TODO: Should this be implicit in the atom ordering when saved?
         # atom_dict['molecule_atom_index'] = self._molecule_atom_index
@@ -317,7 +317,7 @@ class Atom(Particle):
         }
 
     @classmethod
-    def from_dict(cls: type[A], atom_dict: dict) -> A:
+    def from_dict(cls: type[A], atom_dict: Dict) -> A:
         """Create an Atom from a dict representation."""
         return cls(**atom_dict)
 
@@ -694,7 +694,7 @@ class Bond(Serializable):
         self._is_aromatic = is_aromatic
         self._stereochemistry = stereochemistry
 
-    def to_dict(self) -> dict[str, Union[int, bool, str, float]]:
+    def to_dict(self) -> Dict[str, Union[int, bool, str, float]]:
         """
         Return a dict representation of the bond.
 
@@ -1144,7 +1144,7 @@ class FrozenMolecule(Serializable):
     # Safe serialization
     ####################################################################################################
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict:
         """
         Return a dictionary representation of the molecule.
 
@@ -1163,13 +1163,13 @@ class FrozenMolecule(Serializable):
 
         # typing.TypedDict might make this cleaner
         # https://mypy.readthedocs.io/en/latest/typed_dict.html#typeddict
-        molecule_dict: dict[
+        molecule_dict: Dict[
             str,
             Union[
                 None,
                 str,
                 bytes,
-                dict[str, Any],
+                Dict[str, Any],
                 list[str],
                 list[bytes],
                 list[HierarchyElement],
@@ -1255,7 +1255,7 @@ class FrozenMolecule(Serializable):
         mol._initialize_from_dict(molecule_dict)
         return mol
 
-    def _initialize_from_dict(self, molecule_dict: dict):
+    def _initialize_from_dict(self, molecule_dict: Dict):
         """
         Initialize the molecule from a dictionary representation
 
